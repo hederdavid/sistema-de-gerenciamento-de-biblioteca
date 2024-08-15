@@ -1,6 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,13 +17,18 @@ import model.Livro;
 @WebServlet("/LivroServlet")
 public class LivroServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private LivroDAO livroDAO = new LivroDAO();
        
     public LivroServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("entrou no doGet");
+		List<Livro> livros = livroDAO.listarLivrosCadastrados();
+		request.setAttribute("livros", livros);
+		RequestDispatcher rd = request.getRequestDispatcher("livros.jsp");
+		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,13 +46,12 @@ public class LivroServlet extends HttpServlet {
         livro.setCategoria(categoria);
 
         // Salva o livro no banco de dados
-        LivroDAO livroDAO = new LivroDAO();
         boolean sucesso = livroDAO.salvarLivro(livro);
 
         // Redireciona ou mostra uma mensagem de sucesso ou erro
         if (sucesso) {
         	System.out.println("Salvo com sucesso");
-            response.sendRedirect("livro/livros.jsp");
+            response.sendRedirect("LivroServlet");
         } else {
         	System.out.println("Erro ao salvar");
             response.getWriter().write("Erro ao cadastrar o livro. Por favor, tente novamente.");

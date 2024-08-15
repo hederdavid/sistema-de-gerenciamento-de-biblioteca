@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Cadastrar Livro</h1>
-        <form name="frmCadastrarLivro" action="../LivroServlet" method="post">
+        <form name="frmCadastrarLivro" action="LivroServlet" method="post">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" required>
 

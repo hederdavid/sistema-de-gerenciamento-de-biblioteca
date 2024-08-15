@@ -1,8 +1,7 @@
 <%@page import="model.Livro"%>
 <%@page import="java.util.List"%>
 <%
-	List<Livro> lista = (List<Livro>) request.getAttribute("livros");
-	out.print(lista);
+	List<Livro> livros = (List<Livro>) request.getAttribute("livros");
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -10,14 +9,14 @@
     <meta charset="UTF-8">
     <title>Gerenciamento de Livros</title>
     <link rel="stylesheet" href="livros.css">
-    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <header>
         <h1>Sistema de Gerenciamento de Biblioteca</h1>
         <nav>
             <ul>
-                <li><a href="../index.jsp">Home</a></li>
+                <li><a href="index.jsp">Home</a></li>
                 <li><a href="livros.jsp">Livros</a></li>
                 <li><a href="autores.jsp">Autores</a></li>
                 <li><a href="usuarios.jsp">Usuários</a></li>
@@ -41,17 +40,20 @@
             </thead>
             <tbody>
                 <!-- Linhas de exemplo, você vai popular isso dinamicamente -->
-                <tr>
-                    <td>1</td>
-                    <td>O Alquimista</td>
-                    <td>Paulo Coelho</td>
-                    <td>1988</td>
-                    <td>Ficção</td>
-                    <td>
-                        <button class="btn-edit">Editar</button>
-                        <button class="btn-delete">Excluir</button>
-                    </td>
-                </tr>
+                <%for (Livro livro : livros) { %>
+				<tr>
+					<td><%=livro.getId()%></td>
+					<td><%=livro.getTitulo()%></td>
+					<td><%=livro.getAutor()%></td>
+					<td><%=livro.getDataPublicacao()%></td>
+					<td><%=livro.getCategoria()%></td>
+					<td>
+						<a href="select?idcon=<%=livro.getId() %>" class="btn-edit">Editar</a>
+						<a href="" class="btn-delete">Excluir</a>
+					</td>
+					
+				</tr>
+			<%} %>
             </tbody>
         </table>
     </main>

@@ -2,6 +2,10 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Livro;
 import util.Conexao;
 
@@ -25,35 +29,29 @@ public class LivroDAO {
             return false;
         }
     }
-//    public List<Livro> listarLivrosCadastrados(Livro livro) {
-//    	List<Livro> livros = new ArrayList<>();
-//    	String read = "SELECT * FROM livros ORDER BY titulo";
-//    	try {
-//    		Connection con = Conexao.conectar();
-//    		PreparedStatement pst = con.prepareStatement(read);
-//  			ResultSet rs = pst.executeQuery();
-//  			while(rs.next()) {
-//  				String idcon = rs.getString(1);
-//  				String nome = rs.getString(2);
-//  				String fone = rs.getString(3);
-//  				String email = rs.getString(4);
-//  				
-//  				contatos.add(new JavaBeans(idcon, nome, fone, email));	
-//  			}
-//  			con.close();
-//  			return contatos;
-//            
-//            
-//        } catch (ClassNotFoundException e) {
-//            System.out.println("Driver JDBC não encontrado: " + e.getMessage());
-//            return null;
-//        } catch (SQLException e) {
-//            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
-//            return null;
-//        } catch (Exception e) {
-//            System.out.println("Erro inesperado: " + e.getMessage());
-//            return null;
-//        }
-//    }
+    public List<Livro> listarLivrosCadastrados() {
+    	List<Livro> livros = new ArrayList<>();
+    	String read = "SELECT * FROM livros ORDER BY titulo";
+    	try {
+    		Connection con = Conexao.conectar();
+    		PreparedStatement pst = con.prepareStatement(read);
+  			ResultSet rs = pst.executeQuery();
+  			while(rs.next()) {
+  				int id = Integer.parseInt(rs.getString(1));
+  				String titulo = rs.getString(2);
+  				String autor = rs.getString(3);
+  				String dataPublicacao = rs.getString(4);
+  				String categoria = rs.getString(5);
+  				
+  				livros.add(new Livro(id, titulo, autor, dataPublicacao, categoria));	
+  			}
+  			con.close();
+  			System.out.println(livros);
+  			return livros;   
+        } catch (Exception e) {
+            System.out.println("Erro inesperado: " + e.getMessage());
+            return null;
+        }
+    }
 
 }

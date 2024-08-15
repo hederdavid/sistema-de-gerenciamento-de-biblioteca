@@ -10,7 +10,7 @@
         <h1>Sistema de Gerenciamento de Biblioteca</h1>
         <nav>
             <ul>
-                <li><a href="livro/livros.jsp">Livros</a></li>
+                <li><a href="LivroServlet">Livros</a></li>
                 <li><a href="autores.jsp">Autores</a></li>
                 <li><a href="usuarios.jsp">Usuários</a></li>
                 <li><a href="emprestimos.jsp">Empréstimos</a></li>
